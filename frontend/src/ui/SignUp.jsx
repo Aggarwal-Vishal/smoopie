@@ -13,36 +13,57 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { USER_API } from "@/utils/constant";
 import axios from "axios";
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
-const Login = () => {
-  const [input, setInput] = useState({
+const SignUp = () => {
+  const [signupInput, setSignupInput] = useState({
     name: "",
     email: "",
     password: "",
   });
 
-  // const navigate = useNavigate();
+  const [signInInput, setSignInInput] = useState({
+    email: "",
+    password: "",
+  });
+
+  const navigate = useNavigate();
 
   const registerHandler = async (e) => {
     e.preventDefault();
+    try {
+      const res = await axios.post(`${USER_API}/register`, signupInput, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
 
-    const formData = new FormData();
-    formData.append("name", input.name);
-    formData.append("email", input.email);
-    formData.append("password", input.password);
+      if (res.data.success) {
+        toast.success(res.data.message);
+        console.log(res.data);
+        navigate("/login");
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.log(error);
+    }
+  };
+
+  const loginHandler = async (e) => {
+    e.preventDefault();
 
     try {
-      const res = await axios.post(`${USER_API}/register`, formData, {
+      const res = await axios.post(`${USER_API}/login`, signInInput, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
         withCredentials: true,
       });
 
       if (res.data.success) {
         console.log(res.data);
-        // navigate("/login");
       }
     } catch (error) {
       console.log(error);
@@ -50,12 +71,12 @@ const Login = () => {
   };
   return (
     <div className="h-screen flex items-center justify-center">
-      <Tabs defaultValue="account" className="w-[400px]">
+      <Tabs defaultValue="SignUp" className="w-[400px]">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="singup">Sign Up</TabsTrigger>
-          <TabsTrigger value="signin">Sign In</TabsTrigger>
+          <TabsTrigger value="SignUp">Sign Up</TabsTrigger>
+          <TabsTrigger value="SignIn">Sign In</TabsTrigger>
         </TabsList>
-        <TabsContent value="account">
+        <TabsContent value="SignUp">
           <Card>
             <CardHeader>
               <CardTitle>Sign Up</CardTitle>
@@ -67,8 +88,10 @@ const Login = () => {
                 <Input
                   id="name"
                   name="name"
-                  value={input.name}
-                  onChange={(e) => setInput({ ...input, name: e.target.value })}
+                  value={signupInput.name}
+                  onChange={(e) =>
+                    setSignupInput({ ...signupInput, name: e.target.value })
+                  }
                 />
               </div>
               <div className="space-y-1">
@@ -76,20 +99,20 @@ const Login = () => {
                 <Input
                   id="email"
                   name="email"
-                  value={input.email}
+                  value={signupInput.email}
                   onChange={(e) =>
-                    setInput({ ...input, email: e.target.value })
+                    setSignupInput({ ...signupInput, email: e.target.value })
                   }
                 />
               </div>
               <div className="space-y-1">
-                <Label htmlFor="name">Password</Label>
+                <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
                   name="password"
-                  value={input.password}
+                  value={signupInput.password}
                   onChange={(e) =>
-                    setInput({ ...input, password: e.target.value })
+                    setSignupInput({ ...signupInput, password: e.target.value })
                   }
                 />
               </div>
@@ -105,7 +128,7 @@ const Login = () => {
             </CardFooter>
           </Card>
         </TabsContent>
-        <TabsContent value="password">
+        <TabsContent value="SignIn">
           <Card>
             <CardHeader>
               <CardTitle className="">Sign In</CardTitle>
@@ -115,16 +138,32 @@ const Login = () => {
             </CardHeader>
             <CardContent className="space-y-2">
               <div className="space-y-1">
-                <Label htmlFor="current">Email</Label>
-                <Input id="current" type="email" />
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={signInInput.email}
+                  onChange={(e) =>
+                    setSignInInput({ ...signInInput, email: e.target.value })
+                  }
+                />
               </div>
               <div className="space-y-1">
-                <Label htmlFor="new">Password</Label>
-                <Input id="new" type="password" />
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={signInInput.password}
+                  onChange={(e) =>
+                    setSignInInput({ ...signInInput, password: e.target.value })
+                  }
+                />
               </div>
             </CardContent>
             <CardFooter>
-              <Button className="w-full">Sign In</Button>
+              <Button onClick={loginHandler} className="w-full">
+                Sign In
+              </Button>
             </CardFooter>
           </Card>
         </TabsContent>
@@ -133,4 +172,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;
