@@ -7,12 +7,13 @@ import {
 } from "@/components/ui/popover";
 import { USER_API } from "@/utils/constant";
 import axios from "axios";
-import { LogOut } from "lucide-react";
-import { Link } from "react-router-dom";
+import { LogIn } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 // import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const logoutHandler = async () => {
     try {
       const res = await axios.post(`${USER_API}/logout`, {
@@ -23,6 +24,7 @@ const Navbar = () => {
       });
       if (res.data.success) {
         toast.success(res.data.message);
+        navigate("/login");
       }
     } catch (error) {
       toast.error(error.response.data.message);
@@ -70,8 +72,8 @@ const Navbar = () => {
                   </Avatar>
                 </div>
                 <div className="flex flex-col my-2 text-gray-600 ">
-                  <div className="flex w-fit items-center gap-2 cursor-pointer">
-                    <LogOut />
+                  <div className="flex w-fit items-center cursor-pointer">
+                    <LogIn />
                     <Button onClick={logoutHandler} variant="link">
                       Logout{" "}
                     </Button>
