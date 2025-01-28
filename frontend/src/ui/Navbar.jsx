@@ -31,12 +31,15 @@ const Navbar = () => {
       console.log(error);
     }
   };
+
   return (
     <div className="bg-blue-600 fixed top-0 w-full p-4 ">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16">
         <div>
           <h1 className="text-2xl font-bold">
-            Smoo<span className="text-[#541c82]">pie</span>
+            <Link to="/">
+              Smoo<span className="text-[#541c82]">pie</span>
+            </Link>
           </h1>
         </div>
         <div className="flex items-center gap-12">
@@ -47,6 +50,11 @@ const Navbar = () => {
             <Link to="/register">
               <Button className="bg-[#6A38C2] hover:bg-[#6A38C2]">
                 Signup
+              </Button>
+            </Link>
+            <Link to="/add-recipie">
+              <Button className="bg-[#8e2bf1] hover:bg-[#6A38C2]">
+                Add Smoothie
               </Button>
             </Link>
           </div>

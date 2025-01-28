@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./ui/Home";
 import Login from "./ui/Login";
 import SignUp from "./ui/SignUp";
+import AddRecipie from "./ui/AddRecipie";
 
 const appRouter = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const appRouter = createBrowserRouter([
   {
     path: "/register",
     element: <SignUp />,
+  },
+  {
+    path: "/add-recipie",
+    element: <AddRecipie />,
   },
 ]);
 

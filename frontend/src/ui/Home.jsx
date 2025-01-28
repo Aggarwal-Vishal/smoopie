@@ -1,17 +1,13 @@
 import HeroSection from "./HeroSection";
 import Navbar from "./Navbar";
+import RecipieCard from "./RecipieCard";
 
 const Home = () => {
   return (
     <div>
       <Navbar />
       <HeroSection />
-
-      {/* Search Box */}
-      <div></div>
-
-      {/* Recipie Cards */}
-      <div></div>
+      <RecipieCard />
     </div>
   );
 };
