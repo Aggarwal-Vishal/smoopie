@@ -7,8 +7,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useNavigate, useParams } from "react-router-dom";
 
 const RecipieCard = () => {
+  const navigate = useNavigate();
+
+  const recipieId = useParams();
   return (
     <div className="flex items-center justify-center h-screen">
       <Carousel className="w-full max-w-xs">
@@ -30,7 +34,12 @@ const RecipieCard = () => {
                     </span>
                   </CardContent>
                   <div className="flex p-2 items-center justify-center">
-                    <Button className=" ">Read Recipie</Button>
+                    <Button
+                      onClick={() => navigate(`/recipie/${recipieId.id}`)}
+                      className=" "
+                    >
+                      Read Recipie
+                    </Button>
                   </div>
                 </Card>
               </div>

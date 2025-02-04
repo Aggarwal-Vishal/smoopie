@@ -34,7 +34,7 @@ const Login = () => {
         withCredentials: true,
       });
       if (res.data.success) {
-        console.log(res.data);
+        console.log("Login Response", res.data);
         toast.success(res.data.message);
         navigate("/");
       }
@@ -46,11 +46,13 @@ const Login = () => {
   return (
     <div className="h-screen flex items-center justify-center">
       <Navbar />
-      <Tabs defaultValue="SignUp" className="w-[400px]">
+      <Tabs defaultValue="SignIn" className="w-[400px]">
         <TabsList className="grid items-center justify-between w-full grid-cols-2 ">
-          <TabsTrigger value="SignUp">Sign In</TabsTrigger>
+          <TabsTrigger value="SignIn" className="w-full text-center">
+            Sign In
+          </TabsTrigger>
         </TabsList>
-        <TabsContent value="SignUp">
+        <TabsContent value="SignIn">
           <Card>
             <CardHeader>
               <CardTitle>Sign In</CardTitle>
