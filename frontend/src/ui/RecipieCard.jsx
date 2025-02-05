@@ -11,8 +11,9 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const RecipieCard = () => {
   const navigate = useNavigate();
-
   const recipieId = useParams();
+  console.log(recipieId);
+
   return (
     <div className="flex items-center justify-center h-screen">
       <Carousel className="w-full max-w-xs">
@@ -35,10 +36,10 @@ const RecipieCard = () => {
                   </CardContent>
                   <div className="flex p-2 items-center justify-center">
                     <Button
-                      onClick={() => navigate(`/recipie/${recipieId.id}`)}
+                      onClick={() => navigate(`/recipie/${recipieId._id}`)}
                       className=" "
                     >
-                      Read Recipie
+                      Read Recipe
                     </Button>
                   </div>
                 </Card>

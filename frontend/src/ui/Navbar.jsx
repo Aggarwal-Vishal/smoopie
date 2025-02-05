@@ -9,7 +9,7 @@ import {
 import { USER_API } from "@/utils/constant";
 import axios from "axios";
 import { LogIn } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // import { Link } from "react-router-dom";
 import { toast } from "sonner";
@@ -40,6 +40,10 @@ const Navbar = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    setIsLoggedIn(true);
+  }, []);
 
   return (
     <div className="bg-[#0c264adb] fixed top-0 w-full p-4">
