@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -8,19 +9,23 @@ import {
 } from "@/components/ui/popover";
 import { USER_API } from "@/utils/constant";
 import axios from "axios";
-import { LogIn } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Edit, LogIn } from "lucide-react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+
   const navigate = useNavigate();
 
-  const logoutHandler = async () => {
+  const logoutHandler = () => {
+    setIsLoggedIn(false);
+    toast.success("Logged Out of Successfully");
+    navigate("/login");
     try {
-      const res = await axios.post(
+      const res = axios.post(
         `${USER_API}/logout`,
         {},
         {
@@ -30,20 +35,11 @@ const Navbar = () => {
           withCredentials: true,
         }
       );
-      if (res.data.success) {
-        toast.success("Logged Out of Successfully");
-        setIsLoggedIn(false);
-        navigate("/login");
-      }
     } catch (error) {
       toast.error(error.response?.data?.message);
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    setIsLoggedIn(true);
-  }, []);
 
   return (
     <div className="bg-[#0c264adb] fixed top-0 w-full p-4">
@@ -86,10 +82,16 @@ const Navbar = () => {
                         </Avatar>
                       </div>
                       <div className="flex flex-col my-2 text-gray-600 ">
+                        <div className="flex mt-2 w-fit items-center cursor-pointer">
+                          <Edit />
+                          <Button className="" variant="link">
+                            Edit Recipie
+                          </Button>
+                        </div>
                         <div className="flex w-fit items-center cursor-pointer">
                           <LogIn />
                           <Button onClick={logoutHandler} variant="link">
-                            Logout{" "}
+                            Logout
                           </Button>
                         </div>
                       </div>

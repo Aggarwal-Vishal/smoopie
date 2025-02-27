@@ -6,14 +6,12 @@ import { useParams } from "react-router-dom";
 
 const Recipie = () => {
   const [recipie, setRecipie] = useState(null);
-
   const params = useParams();
   const id = params.id;
   console.log("recipie id", id);
 
   useEffect(() => {
     console.log("params", params);
-
     const fetchApi = async () => {
       try {
         const res = await axios.get(`${RECIPIE_API}/get/${id}`);

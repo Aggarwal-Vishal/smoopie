@@ -7,6 +7,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { RECIPIE_API } from "@/utils/constant";
+import axios from "axios";
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const RecipieCard = () => {
@@ -14,8 +17,17 @@ const RecipieCard = () => {
   const recipieId = useParams();
   console.log(recipieId);
 
+  useEffect(() => {
+    try {
+      const res = axios.get(`${RECIPIE_API}/get`);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center ">
       <Carousel className="w-full max-w-xs">
         <CarouselContent>
           {Array.from({ length: 5 }).map((_, index) => (
